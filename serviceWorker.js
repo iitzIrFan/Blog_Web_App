@@ -4,7 +4,7 @@ const assets = [
   "/index.html",
   "/css/style.css",
   "/js/app.js",
-  "logo.jpg"
+  "logo.jpg",
 ];
 
 self.addEventListener("install", installEvent => {
@@ -16,9 +16,17 @@ self.addEventListener("install", installEvent => {
 });
 
 self.addEventListener("fetch", fetchEvent => {
-  fetchEvent.respondWith(
-    caches.match(fetchEvent.request).then(res => {
-      return res || fetch(fetchEvent.request);
-    })
-  );
+  if (fetchEvent.request.url.includes("logo.jpg")) {
+    fetchEvent.respondWith(
+      caches.match("logo.jpg").then(cachedResponse => {
+        return cachedResponse || fetch(fetchEvent.request);
+      })
+    );
+  } else {
+    fetchEvent.respondWith(
+      caches.match(fetchEvent.request).then(cachedResponse => {
+        return cachedResponse || fetch(fetchEvent.request);
+      })
+    );
+  }
 });
