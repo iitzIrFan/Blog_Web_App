@@ -18,7 +18,7 @@ self.addEventListener("install", installEvent => {
 self.addEventListener("fetch", fetchEvent => {
   if (fetchEvent.request.url.includes("logo.jpg")) {
     fetchEvent.respondWith(
-      caches.match("logo.jpg").then(cachedResponse => {
+      caches.match("logo.png").then(cachedResponse => {
         return cachedResponse || fetch(fetchEvent.request);
       })
     );
