@@ -1,3 +1,12 @@
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function() {
+    navigator.serviceWorker
+      .register("/serviceWorker.js")
+      .then(res => console.log("service worker registered"))
+      .catch(err => console.log("service worker not registered", err))
+  })
+}
+
 const blogContainer = document.querySelector('.blog__container');
 const blogModal = document.querySelector(".blog__modal__body");
 let globalStore = [];
@@ -157,11 +166,3 @@ const openBlog = (event) => {
   blogModal.innerHTML = htmlModalContent(getBlog);
 };
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function() {
-    navigator.serviceWorker
-      .register("/serviceWorker.js")
-      .then(res => console.log("service worker registered"))
-      .catch(err => console.log("service worker not registered", err))
-  })
-}
