@@ -3,7 +3,7 @@
     "short_name": "Blog Web-App",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#FFFFFF",
+    "background_color": "#000000",
     "theme_color": "#87CEEB",
     "orientation": "portrait-primary",
     "icons": [
