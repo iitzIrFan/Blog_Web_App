@@ -1,7 +1,7 @@
 {
     "name": "Blog Web App",
     "short_name": "Blog App Testing",
-    "start_url": "index.html",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#0000FF",
     "theme_color": "#db4938",
@@ -41,3 +41,4 @@
       }
     ]
   }
+  
