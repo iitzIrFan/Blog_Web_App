@@ -1,6 +1,6 @@
 {
-    "name": "Blog Web App",
-    "short_name": "Blog App Testing",
+    "name": "Blog Web-App",
+    "short_name": "Blog Web-App",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#FFFFFF",
