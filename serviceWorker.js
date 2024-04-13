@@ -8,26 +8,34 @@ const assets = [
   "logo.png",
 ];
 
-self.addEventListener("install", installEvent => {
-  installEvent.waitUntil(
+self.addEventListener("install", event => {
+  event.waitUntil(
     caches.open(staticCacheName).then(cache => {
-      cache.addAll(assets);
+      return cache.addAll(assets);
     })
   );
 });
 
-self.addEventListener("fetch", fetchEvent => {
-  if (fetchEvent.request.url.includes("logo.png")) {
-    fetchEvent.respondWith(
-      caches.match("logo.png").then(cachedResponse => {
-        return cachedResponse || fetch(fetchEvent.request);
-      })
-    );
-  } else {
-    fetchEvent.respondWith(
-      caches.match(fetchEvent.request).then(cachedResponse => {
-        return cachedResponse || fetch(fetchEvent.request);
-      })
-    );
-  }
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then(networkResponse => {
+        if (!networkResponse || networkResponse.status !== 200) {
+          return networkResponse;
+        }
+
+        const responseToCache = networkResponse.clone();
+
+        caches.open(staticCacheName).then(cache => {
+          cache.put(event.request, responseToCache);
+        });
+
+        return networkResponse;
+      });
+    })
+  );
 });
