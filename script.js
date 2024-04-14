@@ -48,38 +48,43 @@ const updateLocalStorage = () => {
 };
 
 const saveChanges = () => {
-  // Get values from input fields
   const imageUrl = document.getElementById('imageurl').value;
   const blogTitle = document.getElementById('title').value;
-  const blogType = document.getElementById('type').value;
+  const blogType = document.getElementById('type');
   const blogDescription = document.getElementById('description').value;
 
-  // Check if any of the fields are empty
-  if (!imageUrl || !blogTitle || !blogType || !blogDescription) {
+  // Check if all fields are filled
+  if (!imageUrl || !blogTitle || !blogType.value || !blogDescription) {
     alert('Please fill in all fields');
     return;
   }
 
+  // Check for the 'type' input validity
+  if (!blogType.checkValidity()) {
+    alert(`The type must be between 1 and 30 characters.`);
+    return;
+  }
+
   const blogData = {
-    id: `${Date.now()}`,
+    id: `${Date.now()}`, // Unique ID based on timestamp
     imageUrl,
     blogTitle,
-    blogType,
+    blogType: blogType.value,
     blogDescription
   };
 
   const createNewBlog = newCard(blogData);
   blogContainer.insertAdjacentHTML("beforeend", createNewBlog);
-
   globalStore.push(blogData);
   updateLocalStorage();
 
-  // Reset input fields
+  // Clear input fields
   document.getElementById('imageurl').value = '';
   document.getElementById('title').value = '';
-  document.getElementById('type').value = '';
+  blogType.value = '';
   document.getElementById('description').value = '';
 };
+
 
 const deleteCard = (event) => {
   event = window.event;
