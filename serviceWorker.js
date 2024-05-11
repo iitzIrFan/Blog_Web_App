@@ -1,15 +1,15 @@
-const staticDevCoffee = "dev-coffee-site-v1"
+const cachevar = "MY Assets"
 const assets = [
   "/",
   "/index.html",
-  "/css/style.css",
-  "/js/app.js",
-  "logo.png",
+  "/style.css",
+  "/script.js",
+  "/logo.png",
 ]
 
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
-    caches.open(staticDevCoffee).then(cache => {
+    caches.open(cachevar).then(cache => {
       cache.addAll(assets)
     })
   )
